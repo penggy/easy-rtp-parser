@@ -134,8 +134,6 @@ export = class EasyRtpParser {
     };
 
     static parseRtpPacket(buf) {
-        console.log(buf);
-        console.log(Buffer.isBuffer(buf));
         if(!Buffer.isBuffer(buf)) {
             throw new Error('buffer required');
         }
