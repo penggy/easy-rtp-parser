@@ -1,0 +1,28 @@
+{
+  "name": "@penggy/easy-rtp-parser",
+  "version": "1.0.0",
+  "description": "easy rtp parser",
+  "main": "dist/easy-rtp-parser.js",
+  "types": "dist/easy-rtp-parser.d.ts",
+  "scripts": {
+    "dev": "webpack --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/penggy/easy-rtp-parser.git"
+  },
+  "keywords": [],
+  "author": "penggy <peng.wu@foxmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "9.3.0",
+    "ts-loader": "3.2.0",
+    "tsconfig-paths-webpack-plugin": "2.0.0",
+    "typescript": "2.6.2",
+    "webpack": "3.10.0"
+  }
+}
