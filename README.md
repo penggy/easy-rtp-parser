@@ -9,7 +9,7 @@ easy rtp parser
 ## usage
 
 ```js
-const Parser = require('easy-rtp-parser');
+const Parser = require('@penggy/easy-rtp-parser');
 
 var rtp = Parser.parseRtpPacket(rtpBuf);
 console.log(`ssrc : ${rtp.ssrc}`);
