@@ -133,7 +133,7 @@ export = class EasyRtpParser {
         127: {name: 'dynamic'}
     };
 
-    static parseRtpPacket(buf) {
+    static parseRtpPacket(buf:Buffer) {
         if(!Buffer.isBuffer(buf)) {
             throw new Error('buffer required');
         }
@@ -201,11 +201,45 @@ export = class EasyRtpParser {
         return parsed;
     }
 
-    parseRtpPayloadType(payloadType:number) {
+    static parseRtpPayloadType(payloadType:number) {
         if (payloadType < 0 || payloadType > 127) {
             throw new Error('payload type range error');
         }
     
         return EasyRtpParser.payloadTypesHash[payloadType];
+    }
+
+    static isKeyframeStart(rtpRawdata: Buffer) : Boolean {
+        if(!Buffer.isBuffer(rtpRawdata)) {
+            return false;
+        }
+        var offset = 0;
+        var end = rtpRawdata.length;
+        if(rtpRawdata.length >= 4 && rtpRawdata.readUInt8(0) == 0x00 && rtpRawdata.readUInt8(1) == 0x00 && rtpRawdata.readUInt8(2) == 0x00 && rtpRawdata.readUInt8(3) == 0x01) {
+            offset += 4;
+        }
+        if(end - offset < 1) {
+            console.log('no enough space for nalu header');
+            return false;
+        }
+        var firstByte = rtpRawdata.readUInt8(offset);
+        offset += 1;
+        var nalType = firstByte & 0x1F;
+        if(nalType == 7 || nalType == 5) { // sps | pps(?) | idr
+            return true;
+        }
+        if(nalType == 28) { // fu-a
+            if(end - offset < 1) {
+                console.log('no enough space for fu-a header');
+                return false;
+            }
+            var secondByte = rtpRawdata.readUInt8(offset);
+            offset += 1;
+            var se = secondByte >> 6; //bit 10 -> start, 00 -> middle, 01 -> end
+            if(se == 2) {
+                return true;
+            }
+        }
+        return false;
     }
 }

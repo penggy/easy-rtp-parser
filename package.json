@@ -1,6 +1,6 @@
 {
   "name": "@penggy/easy-rtp-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "easy rtp parser",
   "main": "dist/easy-rtp-parser.js",
   "types": "dist/easy-rtp-parser.d.ts",
